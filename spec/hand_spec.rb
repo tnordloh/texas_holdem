@@ -3,21 +3,7 @@ require "minitest/autorun"
 require_relative "../lib/texas_holdem/hand"
 
 describe TexasHoldem::Hand do
-  it "discards invalid hands" do
-    hands = [ %w[Kc 9s Ks Kd 9d 3c 6d],
-              %w[9c Ah Ks Kd 9d 3c 6d],
-              %w[Ac Qc Ks Kd 9d 3c],
-              %w[9h 5s],
-              %w[4d 2d Ks Kd 9d 3c 6d],
-              %w[7s Ts Ks Kd 9d]
-            ]
-    hands.map! do |hand|
-      TexasHoldem::Hand.new(hand)
-    end
-    hands.select! {|hand| 
-      hand.folded?}
-    hands.size.must_equal(3)  
-  end
+
   it "outputs a hand" do
     hands = [
       %w[9c Ah Ks Kd 9d 3c 6d]
@@ -25,14 +11,6 @@ describe TexasHoldem::Hand do
     hands.map! { |hand| TexasHoldem::Hand.new(hand) }
     hands[0].sort!.reverse!
     hands[0].to_s.must_equal("Ah Kd Ks 9c 9d 6d 3c")
-  end
-
-  it "finds the highest-value card" do
-    hands = [
-      %w[9c Ah Ks Kd 9d 3c 6d]
-    ] 
-    hands.map! { |hand| TexasHoldem::Hand.new(hand) }
-    hands[0].high_card_value.must_equal(14)
   end
 
   it "finds the best combination of cards" do
@@ -59,7 +37,7 @@ describe TexasHoldem::Hand do
     hand.get_best_hand.must_equal(514)
     cards=  %w[9c Ah Ks Kd 7d 9s 9d]
     hand = TexasHoldem::Hand.new(cards) 
-    hand.get_best_hand.must_equal(414)
+    hand.get_best_hand.must_equal(714)
     cards=  %w[9c Ah Ks Kd 7d 3c 9d]
     hand = TexasHoldem::Hand.new(cards) 
     hand.get_best_hand.must_equal(314)
