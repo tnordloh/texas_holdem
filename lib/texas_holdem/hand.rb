@@ -97,8 +97,8 @@ module TexasHoldem
 
     def find_straight
       potential_straights=@cards.combination(5).to_a
-      aces_first = create_aces_first_list(potential_straights)
-      (potential_straights + aces_first).select { |list| all_in_order?(list) }
+      potential_straights += create_aces_first_list(potential_straights)
+      potential_straights.select { |list| all_in_order?(list) }
     end
 
     #this deserves a small explanation.  Essentially, this method
