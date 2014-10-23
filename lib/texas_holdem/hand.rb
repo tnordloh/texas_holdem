@@ -101,6 +101,17 @@ module TexasHoldem
       (potential_straights + aces_first).select { |list| all_in_order?(list) }
     end
 
+    #this deserves a small explanation.  Essentially, this method
+    #is used to duplicate values in an array that "end" with
+    #an ace, so that we can deal with the occasion where the ace is the
+    #low card in flushes
+    def create_aces_first_list potential_straights
+      potential_straights.each_with_object([]) { |list,ace_first|
+        list.sort!
+        ace_first << list.dup.rotate!(-1) if list[-1].face=="A"
+      } 
+    end
+
     def folded?
       @cards.size != 7
     end
