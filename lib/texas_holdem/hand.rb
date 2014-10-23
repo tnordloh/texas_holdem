@@ -108,13 +108,8 @@ module TexasHoldem
     def create_aces_first_list potential_straights
       potential_straights.each_with_object([]) { |list,ace_first|
         list.sort!
-        ace_first << shift_ace_to_front(list) if list[-1].face=="A"
+        ace_first << list.dup.rotate!(-1) if list[-1].face=="A"
       } 
-    end
-
-    def shift_ace_to_front list
-      temp = list.dup
-      temp.unshift(temp.pop)
     end
 
     def folded?
@@ -136,7 +131,7 @@ module TexasHoldem
     end
 
     def all_in_order? list
-      starting_value = list[0].value == 14 ? 1 : list[0].value
+      starting_value = list[0].face == "A" ? 1 : list[0].value
       list[1..-1].all? { |card| (starting_value += 1)  == card.value }
     end
 
