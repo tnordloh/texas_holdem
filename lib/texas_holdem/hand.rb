@@ -37,9 +37,10 @@ module TexasHoldem
       return 0 if folded?
       inverted_list=TexasHoldem::HAND_LIST.invert
       inverted_list.keys.sort.reverse.each do |key|
-        @hand_name=inverted_list[key]
-        if (hands = self.send "find_#{@hand_name}").size >=1
+        hand_name=inverted_list[key]
+        if (hands = self.send "find_#{hand_name}").size >=1
           @current_best_hand=most_valuable_valid_hand(hands)
+          @hand_name=hand_name
           return key*100 + high_card_value(@current_best_hand)
         end
       end
