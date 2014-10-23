@@ -9,19 +9,14 @@ module TexasHoldem
     end
     include Comparable
     def value
-      if @face.to_i !=0
-        face=@face.to_i
-      elsif @face == "T"
-        @value=10
-      elsif @face == "J"
-        @value=11
-      elsif @face == "Q"
-        @value=12
-      elsif @face == "K"
-        @value=13
-      elsif @face == "A"
-        @value=14
-      end
+      alpha_cards= {
+        "T" => 10,
+        "J" => 11,
+        "Q" => 12,
+        "K" => 13,
+        "A" => 14
+      }
+      @value = @face.to_i !=0 ? @face.to_i : alpha_cards[@face]
     end
     def <=>(other)
       self.value <=> other.value
